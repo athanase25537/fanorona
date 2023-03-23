@@ -33,13 +33,23 @@ let player1 = true; // true for player 1 and false for player 2
 // Put all the pieces on the board
 let pieces = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // array of the pieces: 0 if empty and 1 if full
 var nb_pieces = 0; // counter of pieces, max is 6
-
+var cursor_id;
 for(let i = 0; i < all_pos.length; i++){
     let pos = all_pos[i];
     pos.addEventListener('click', (e) => {
+        if(cursor_id === undefined){
+            cursor_id = pos.id;
+        }
+        if(nb_pieces === 6){
+            if(pos.id != cursor_id){
+                remove_cursor(all_pos);
+                cursor_id = pos.id;
+            }
+            if(pos.firstElementChild != null){
+                pos.classList.toggle('choosen');
+            }
+        }
         if(pos.firstElementChild == null && nb_pieces < 6){
-        pos.classList.toggle('choosen');
-
             if(player1){
                 piece_1(pos);
                 player1 = false;
@@ -49,8 +59,20 @@ for(let i = 0; i < all_pos.length; i++){
             }
             nb_pieces++;
         }
+
+        
         
     });
+}
+
+// remove cursor
+function remove_cursor(arr){
+    for(let j = 0; j < arr.length; j++){
+        if(arr[j].classList.contains("choosen")){
+            arr[j].classList.remove("choosen");
+            break;
+        }
+    }
 }
 
 /**
