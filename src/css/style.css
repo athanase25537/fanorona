@@ -22,19 +22,19 @@
 
 img{
     width: 40px;
-    /* display: none; */
+    height: 40px;
 }
 
 #first{
     position: absolute;
     top: 1%;
-    left: 1.7%;
+    left: 0%;
 }
 
 #second{
     position: absolute;
     top: 1%;
-    left: 45%;
+    left: 43.8%;
 }
 
 #third{
@@ -46,13 +46,13 @@ img{
 #fourth{
     position: absolute;
     bottom: 1%;
-    left: 1.7%;
+    left: 0;
 }
 
 #fifth{
     position: absolute;
     bottom: 1%;
-    left: 45%;
+    left: 43.8%;
 }
 
 #sixth{
@@ -63,14 +63,14 @@ img{
 
 #center-left{
     position: absolute;
-    top: 45%;
-    left: 1.7%;
+    top: 44%;
+    left: 0%;
 }
 
 #center{
     position: absolute;
-    top: 45%;
-    left: 45%;
+    top: 44%;
+    left: 43.8%;
 }
 
 #center-right{
@@ -82,4 +82,15 @@ img{
 .choosen{
     scale: 1.2;
     border-radius: 30px;
+}
+
+/* Pos Start */
+.pos{
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
