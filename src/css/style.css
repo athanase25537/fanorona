@@ -1,0 +1,85 @@
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgb(139, 133, 133);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.fanoronier{
+    width: 450px;
+    height: 450px;
+    overflow: hidden;
+    background-image: url('../img/fanoronier.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    object-fit: cover;
+}
+
+img{
+    width: 40px;
+    /* display: none; */
+}
+
+#first{
+    position: absolute;
+    top: 1%;
+    left: 1.7%;
+}
+
+#second{
+    position: absolute;
+    top: 1%;
+    left: 45%;
+}
+
+#third{
+    position: absolute;
+    top: 1%;
+    left: 88%;
+}
+
+#fourth{
+    position: absolute;
+    bottom: 1%;
+    left: 1.7%;
+}
+
+#fifth{
+    position: absolute;
+    bottom: 1%;
+    left: 45%;
+}
+
+#sixth{
+    position: absolute;
+    bottom: 1%;
+    left: 88%;
+}
+
+#center-left{
+    position: absolute;
+    top: 45%;
+    left: 1.7%;
+}
+
+#center{
+    position: absolute;
+    top: 45%;
+    left: 45%;
+}
+
+#center-right{
+    position: absolute;
+    top: 45%;
+    left: 88%;
+}
+
+.choosen{
+    scale: 1.2;
+    border-radius: 30px;
+}
