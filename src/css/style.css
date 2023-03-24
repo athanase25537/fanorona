@@ -94,5 +94,9 @@ img{
     justify-content: center;
     align-items: center;
     /* background: #fff; */
-    transition: scale .3s;
+    transition: scale .009s;
+}
+
+.pos.last-move{
+    background-color: rgba(29, 154, 29, 0.759);
 }
