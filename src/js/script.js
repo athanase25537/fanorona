@@ -9,11 +9,141 @@ let pos8 = document.querySelector('#fifth');
 let pos9 = document.querySelector('#sixth');
 
 let fanoronier = document.querySelector('.fanoronier');
+let piece_p1 = [];
+let piece_p2 = [];
+let winner = document.querySelector('.winner');
+let winner_player = document.querySelector('.winner strong');
 
 let all_pos = [pos1, pos2, pos3, pos4, pos5, pos6, pos7, pos8, pos9];
 
+let player1 = true; // true for player 1 and false for player 2
+// Put all the pieces on the board
+let pieces = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // array of the pieces: 0 if empty and 1 if full
+var nb_pieces = 0; // counter of pieces, max is 6
+var cursor_id;
 
+const img1 = "img_p1.png";
+const img2 = "img_p2.png";
 
+let old_id = null;
+let id_old = null;
+let mate = false
+for(let i = 0; i < all_pos.length; i++){
+    let pos = all_pos[i];
+
+    // check if mate
+    setInterval(() => {
+        if(is_mate(piece_p1)){
+            winner.classList.remove('no-winner');
+            winner_player.textContent = "Player 1 Win";
+            fanoronier.classList.add("winner-fanoronier");
+            disabled_pieces(all_pos);
+            mate = true;
+        }else if(is_mate(piece_p2)){
+            winner.classList.remove('no-winner');
+            winner_player.textContent = "Player 2 Win";
+            fanoronier.classList.add("winner-fanoronier");
+            disabled_pieces(all_pos);
+            mate = true;
+        }
+    }, 500);
+    pos.addEventListener('click', (e) => {
+
+        if(!mate){
+            if(cursor_id === undefined){
+                cursor_id = pos.id;
+            }
+    
+            if(nb_pieces === 6){
+                if(old_id == null){
+                    if(pos.firstElementChild != null){
+                        old_id = pos.id;
+                    }   
+                }else{
+                    old_id = cursor_id;
+                }
+                if(pos.id != cursor_id){
+                    remove_cursor(all_pos);
+                    cursor_id = pos.id;
+                }
+    
+    
+                if(pos.firstElementChild != null){
+                    pos.classList.toggle('choosen');
+                    id_old = pos.id;
+                }else{
+                    let valid = validMove(cursor_id, old_id);
+                    let choosed = get_piece_choosed(old_id, all_pos);
+                    let arr_src = choosed != null ? choosed.src.split('/') : [];
+                    // check if move is valid
+                    if(valid){
+                        
+                        if(player1){
+                            // Add new piece for player 1
+                            if(arr_src.includes(img1)){
+                                // update player 1 array of pieces
+                                remove_id_choosed(old_id, all_pos, piece_p1);
+                                piece_p1.push(pos.id);
+    
+                                // Delete old piece
+                                choosed.parentNode.removeChild(choosed);
+                                piece_1(pos);
+                                
+                                player1 = false;
+        
+                                // Remove the last last-move
+                                remove_last_move(all_pos);
+        
+                                // Add new last-move
+                                pos.classList.add("last-move");
+    
+                                console.log(piece_p1)
+                            }
+                            
+                        }else{
+                            // Add new piece for player 2
+                            if(arr_src.includes(img2)){
+                                // update player 2 array of pieces
+                                remove_id_choosed(old_id, all_pos, piece_p2);
+                                piece_p2.push(pos.id);
+    
+                                // Delete old piece
+                                choosed.parentNode.removeChild(choosed);
+                                piece_2(pos);
+                                // if(id_old != null){
+                                //     
+                                // }
+                                player1 = true;
+        
+                                // Remove the last last-move
+                                remove_last_move(all_pos);
+        
+                                // Add new last-move
+                                pos.classList.add("last-move");
+                                console.log(piece_p2);
+                            }
+                        }
+                    }else{
+                        // alert(false);
+                    }
+                }
+    
+            }
+            if(pos.firstElementChild == null && nb_pieces < 6){
+                if(player1){
+                    piece_1(pos);
+                    piece_p1.push(pos.id);
+                    player1 = false;
+                }else{
+                    piece_2(pos);
+                    piece_p2.push(pos.id);
+                    player1 = true;
+                }
+                nb_pieces++;
+            }    
+        }
+    });
+}
 
 // create red piece (player 1)
 function piece_1(pos){
@@ -27,97 +157,6 @@ function piece_2(pos){
     let p = document.createElement('img');
         p.src = "src/img/img_p2.png";
         pos.appendChild(p);
-}
-
-let player1 = true; // true for player 1 and false for player 2
-// Put all the pieces on the board
-let pieces = [0, 0, 0, 0, 0, 0, 0, 0, 0]; // array of the pieces: 0 if empty and 1 if full
-var nb_pieces = 0; // counter of pieces, max is 6
-var cursor_id;
-
-const img1 = "img_p1.png";
-const img2 = "img_p2.png";
-
-let old_id = null;
-for(let i = 0; i < all_pos.length; i++){
-    let pos = all_pos[i];
-    pos.addEventListener('click', (e) => {
-        if(cursor_id === undefined){
-            cursor_id = pos.id;
-        }
-
-        if(nb_pieces === 6){
-
-            if(old_id !== null){
-                old_id = cursor_id;
-            }
-            if(pos.id != cursor_id){
-                remove_cursor(all_pos);
-                cursor_id = pos.id;
-                if(old_id == null){
-                    old_id = cursor_id;
-                }
-            }
-
-
-            if(pos.firstElementChild != null){
-                pos.classList.toggle('choosen');
-            }else{
-                let valid = validMove(cursor_id, old_id);
-                let choosed = get_piece_choosed(old_id, all_pos);
-                let arr_src = choosed != null ? choosed.src.split('/') : [];
-                // check if move is valid
-                if(valid){
-                    if(player1){
-                        // Add new piece for player 1
-                        if(arr_src.includes(img1)){
-                            // Delete old piece
-                            choosed.parentNode.removeChild(choosed);
-                            piece_1(pos);
-                            player1 = false;
-    
-                            // Remove the last last-move
-                            remove_last_move(all_pos);
-    
-                            // Add new last-move
-                            pos.classList.add("last-move");
-                        }
-                        
-                    }else{
-                        // Add new piece for player 2
-                        if(arr_src.includes(img2)){
-                            // Delete old piece
-                            choosed.parentNode.removeChild(choosed);
-                            piece_2(pos);
-                            player1 = true;
-    
-                            // Remove the last last-move
-                            remove_last_move(all_pos);
-    
-                            // Add new last-move
-                            pos.classList.add("last-move");
-                        }
-                    }
-                }else{
-                    alert(false);
-                }
-            }
-
-        }
-        if(pos.firstElementChild == null && nb_pieces < 6){
-            if(player1){
-                piece_1(pos);
-                player1 = false;
-            }else{
-                piece_2(pos);
-                player1 = true;
-            }
-            nb_pieces++;
-        }
-
-        
-        
-    });
 }
 
 // remove cursor
@@ -137,6 +176,17 @@ function get_piece_choosed(id, arr){
         }
     }
     return null;
+}
+
+function remove_id_choosed(id, arr, arr_p){
+    let piece = get_piece_choosed(id, arr);
+    let pos = piece.parentNode;
+    for(let i = 0; i < arr_p.length; i++){
+        if(arr_p[i] == pos.id){
+            arr_p.splice(i,1);
+            break;
+        }
+    }
 }
 
 function remove_last_move(arr){
@@ -208,5 +258,50 @@ function validMove(new_id, old_id) {
             return true;
         default:
             return false;
+    }
+}
+
+
+/**
+ * check if mate
+ */
+
+function is_mate(arr){
+    if(arr.includes("first") && arr.includes("second") && arr.includes("third")){
+        return true;
+    }
+    if(arr.includes("first") && arr.includes("center-left") && arr.includes("fourth")){
+        return true;
+    }
+    if(arr.includes("first") && arr.includes("center") && arr.includes("sixth")){
+        return true;
+    }
+    if(arr.includes("third") && arr.includes("center-right") && arr.includes("sixth")){
+        return true;
+    }
+    if(arr.includes("fourth") && arr.includes("fifth") && arr.includes("sixth")){
+        return true;
+    }
+    if(arr.includes("third") && arr.includes("center") && arr.includes("fourth")){
+        return true;
+    }
+    if(arr.includes("second") && arr.includes("center") && arr.includes("fifth")){
+        return true;
+    }
+    if(arr.includes("center-left") && arr.includes("center") && arr.includes("center-right")){
+        return true;
+    }
+}
+
+// Reload page
+
+function refresh(){
+    window.location.reload();
+}
+
+// disabled all pieces
+function disabled_pieces(arr){
+    for(let i = 0; i < arr.length; i++){
+        arr[i].disabled = true;
     }
 }

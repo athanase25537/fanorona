@@ -10,6 +10,7 @@
     z-index: 1;
 }
 
+
 .fanoronier{
     width: 450px;
     height: 450px;
@@ -99,4 +100,39 @@ img{
 
 .pos.last-move{
     background-color: rgba(29, 154, 29, 0.759);
+}
+
+/* winner */
+.winner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    font-size: 4.1em;
+    font-weight: bolder;
+    text-align: center;
+    z-index: 100;
+}
+
+.no-winner{
+    display: none;
+}
+
+.winner-fanoronier{
+    filter: blur(3px);
+}
+.btn{
+    padding: 6%;
+    border-radius: 7px;
+    font-size: .3em;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: scale .3s;
+}
+
+.btn:hover{
+    scale: 1.05;
+    cursor: pointer;
 }
