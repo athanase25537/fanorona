@@ -63,37 +63,43 @@ for(let i = 0; i < all_pos.length; i++){
             if(pos.firstElementChild != null){
                 pos.classList.toggle('choosen');
             }else{
+                let valid = validMove(cursor_id, old_id);
                 let choosed = get_piece_choosed(old_id, all_pos);
                 let arr_src = choosed != null ? choosed.src.split('/') : [];
-                if(player1){
-                    // Add new piece for player 1
-                    if(arr_src.includes(img1)){
-                        // Delete old piece
-                        choosed.parentNode.removeChild(choosed);
-                        piece_1(pos);
-                        player1 = false;
-
-                        // Remove the last last-move
-                        remove_last_move(all_pos);
-
-                        // Add new last-move
-                        pos.classList.add("last-move");
+                // check if move is valid
+                if(valid){
+                    if(player1){
+                        // Add new piece for player 1
+                        if(arr_src.includes(img1)){
+                            // Delete old piece
+                            choosed.parentNode.removeChild(choosed);
+                            piece_1(pos);
+                            player1 = false;
+    
+                            // Remove the last last-move
+                            remove_last_move(all_pos);
+    
+                            // Add new last-move
+                            pos.classList.add("last-move");
+                        }
+                        
+                    }else{
+                        // Add new piece for player 2
+                        if(arr_src.includes(img2)){
+                            // Delete old piece
+                            choosed.parentNode.removeChild(choosed);
+                            piece_2(pos);
+                            player1 = true;
+    
+                            // Remove the last last-move
+                            remove_last_move(all_pos);
+    
+                            // Add new last-move
+                            pos.classList.add("last-move");
+                        }
                     }
-                    
                 }else{
-                    // Add new piece for player 2
-                    if(arr_src.includes(img2)){
-                        // Delete old piece
-                        choosed.parentNode.removeChild(choosed);
-                        piece_2(pos);
-                        player1 = true;
-
-                        // Remove the last last-move
-                        remove_last_move(all_pos);
-
-                        // Add new last-move
-                        pos.classList.add("last-move");
-                    }
+                    alert(false);
                 }
             }
 
@@ -147,11 +153,60 @@ function remove_last_move(arr){
  * if the coordonates are in the one of the coordonate array
  * if there is no piece yet on the same place
  */
-function validMove(e, arr_pos, pieces) {
-    if(e.clientX >= arr_pos.x[0] && e.clientX <= arr_pos.x[1]
-        && e.clientY >= arr_pos.y[0] && e.clientY <= arr_pos.y[1]
-        && pieces === 0){
+function validMove(new_id, old_id) {
+    switch(old_id){
+        case "first":
+            if(new_id === "second" || new_id === "center-left" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "second":
+            if(new_id === "first" || new_id === "third" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "third":
+            if(new_id === "second" || new_id === "center-right" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "center-left":
+            if(new_id === "first" || new_id === "fourth" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "center-right":
+            if(new_id === "third" || new_id === "sixth" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "fourth":
+            if(new_id === "center-left" || new_id === "fifth" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "fifth":
+            if(new_id === "fourth" || new_id === "sixth" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        case "sixth":
+            if(new_id === "fifth" || new_id === "center-right" || new_id === "center"){
+                return true;
+            }else{
+                return false;
+            }
+        
+        case "center":
             return true;
-        }
-    return false;
+        default:
+            return false;
+    }
 }
