@@ -8,6 +8,11 @@ let pos7 = document.querySelector('#fourth');
 let pos8 = document.querySelector('#fifth');
 let pos9 = document.querySelector('#sixth');
 
+// var sounds
+let piece_move_sound = document.querySelector('.piece-sound');
+let invalid_move_sound = document.querySelector('.invalid-move-sound');
+let winner_sound = document.querySelector('.win-sound')
+
 let fanoronier = document.querySelector('.fanoronier');
 let piece_p1 = [];
 let piece_p2 = [];
@@ -27,7 +32,8 @@ const img2 = "img_p2.png";
 
 let old_id = null;
 let id_old = null;
-let mate = false
+let mate = false;
+
 for(let i = 0; i < all_pos.length; i++){
     let pos = all_pos[i];
 
@@ -39,12 +45,22 @@ for(let i = 0; i < all_pos.length; i++){
             fanoronier.classList.add("winner-fanoronier");
             disabled_pieces(all_pos);
             mate = true;
+            winner_sound.play(); 
+            setTimeout(() => {
+                winner_sound.pause();
+                winner_sound.currentTime = 0;
+            }, 3000);   
         }else if(is_mate(piece_p2)){
             winner.classList.remove('no-winner');
             winner_player.textContent = "Player 2 Win";
             fanoronier.classList.add("winner-fanoronier");
             disabled_pieces(all_pos);
             mate = true;
+            winner_sound.play();
+            setTimeout(() => {
+                winner_sound.pause();
+                winner_sound.currentTime = 0;
+            }, 3000); 
         }
     }, 500);
     pos.addEventListener('click', (e) => {
@@ -97,7 +113,17 @@ for(let i = 0; i < all_pos.length; i++){
                                 // Add new last-move
                                 pos.classList.add("last-move");
     
-                                console.log(piece_p1)
+                                piece_move_sound.play();
+                                setTimeout(() => {
+                                    piece_move_sound.pause();
+                                    piece_move_sound.currentTime = 0;
+                                },500);
+                            }else{
+                                invalid_move_sound.play();
+                                setTimeout(() => {
+                                    invalid_move_sound.pause();
+                                    invalid_move_sound.currentTime = 0;
+                                }, 1000);
                             }
                             
                         }else{
@@ -120,16 +146,38 @@ for(let i = 0; i < all_pos.length; i++){
         
                                 // Add new last-move
                                 pos.classList.add("last-move");
-                                console.log(piece_p2);
+                                
+                                piece_move_sound.play();
+                                setTimeout(() => {
+                                    piece_move_sound.pause();
+                                    piece_move_sound.currentTime = 0;
+                                },500);
+                            }else{
+                                invalid_move_sound.play();
+                                setTimeout(() => {
+                                    invalid_move_sound.pause();
+                                    invalid_move_sound.currentTime = 0;
+                                }, 1000);
                             }
                         }
                     }else{
-                        // alert(false);
+                        invalid_move_sound.play();
+                        setTimeout(() => {
+                            invalid_move_sound.pause();
+                            invalid_move_sound.currentTime = 0;
+                        }, 1000);
                     }
                 }
     
             }
             if(pos.firstElementChild == null && nb_pieces < 6){
+                // sound of pieces puttingg
+                piece_move_sound.play();
+                setTimeout(() => {
+                    piece_move_sound.pause();
+                    piece_move_sound.currentTime = 0;
+                },500);
+
                 if(player1){
                     piece_1(pos);
                     piece_p1.push(pos.id);
@@ -291,12 +339,17 @@ function is_mate(arr){
     if(arr.includes("center-left") && arr.includes("center") && arr.includes("center-right")){
         return true;
     }
+
 }
 
 // Reload page
 
 function refresh(){
-    window.location.reload();
+    click_btn();
+    setTimeout(() => {
+        window.location.reload();
+    }, 500);
+    
 }
 
 // disabled all pieces
@@ -304,4 +357,9 @@ function disabled_pieces(arr){
     for(let i = 0; i < arr.length; i++){
         arr[i].disabled = true;
     }
+}
+
+function click_btn(){
+    let btn_click = document.querySelector('.btn-click');
+    btn_click.play();
 }
