@@ -1,22 +1,28 @@
+.body{
+    margin: 0;
+    padding: 0;
+}
+
 .container{
     position: absolute;
     top: 50%;
     left: 50%;
     border-radius: 10px;
-    overflow: hidden;
     border: 1px solid rgb(139, 133, 133);
     transform: translate(-50%, -50%);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    padding: 0;
 }
 
 
 .fanoronier{
     width: 450px;
     height: 450px;
-    overflow: hidden;
+    border-radius: 10px;
     background-image: url('../img/fanoronier.jpg');
     background-repeat: no-repeat;
+    background-position: center;
     background-size: 100%;
     object-fit: cover;
 }
@@ -28,20 +34,20 @@ img{
 
 #first{
     position: absolute;
-    top: 1%;
-    left: 0%;
+    top: 0;
+    left: 0;
 }
 
 #second{
     position: absolute;
-    top: 1%;
+    top: 0;
     left: 43.8%;
 }
 
 #third{
     position: absolute;
-    top: 1%;
-    left: 88%;
+    top: 0;
+    right: 1%;
 }
 
 #fourth{
@@ -59,13 +65,13 @@ img{
 #sixth{
     position: absolute;
     bottom: 1%;
-    left: 88%;
+    right: 1%;
 }
 
 #center-left{
     position: absolute;
     top: 44%;
-    left: 0%;
+    left: 0;
 }
 
 #center{
@@ -76,8 +82,9 @@ img{
 
 #center-right{
     position: absolute;
-    top: 45%;
-    left: 88%;
+    top: 44%;
+    right: 1%;
+
 }
 
 .choosen{
@@ -135,4 +142,86 @@ img{
 .btn:hover{
     scale: 1.05;
     cursor: pointer;
+}
+
+
+/* Responsive */
+
+@media screen and (max-width: 480px){
+    .fanoronier{
+        width: 430px;
+        height: 430px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    .fanoronier{
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 420px){
+    .fanoronier{
+        width: 350px;
+        height: 350px;
+    }
+    #first{
+        top: 0;
+        left: -1.5%;
+    }
+    
+    #second{
+        top: 0;
+        left: 42.1%;
+    }
+    
+    #third{
+        top: 0;
+        right: 0%;
+    }
+    
+    #fourth{
+        bottom: 1%;
+        left: -1.5;
+    }
+    
+    #fifth{
+        bottom: 1%;
+        left: 42.1%;
+    }
+    
+    #sixth{
+        bottom: 1%;
+        right: 0%;
+    }
+    
+    #center-left{
+        top: 42%;
+        left: -1.5%;
+    }
+    
+    #center{
+        top: 42%;
+        left: 42.1%;
+    }
+    
+    #center-right{
+        top: 42%;
+        right: 0%;
+    
+    }
+
+    img{
+        width: 35px;
+        height: 35px;
+    }
+    
+}
+
+@media screen and (max-width: 370px){
+    .fanoronier{
+        width: 350px;
+        height: 350px;
+    }
 }
