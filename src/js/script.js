@@ -38,7 +38,7 @@ for(let i = 0; i < all_pos.length; i++){
     let pos = all_pos[i];
 
     // check if mate
-    setInterval(() => {
+    let idInterval = setInterval(() => {
         if(is_mate(piece_p1)){
             winner.classList.remove('no-winner');
             winner_player.textContent = "Player 1 Win";
@@ -49,6 +49,7 @@ for(let i = 0; i < all_pos.length; i++){
             setTimeout(() => {
                 winner_sound.pause();
                 winner_sound.currentTime = 0;
+                clearInterval(idInterval);
             }, 1000);   
         }else if(is_mate(piece_p2)){
             winner.classList.remove('no-winner');
@@ -60,6 +61,7 @@ for(let i = 0; i < all_pos.length; i++){
             setTimeout(() => {
                 winner_sound.pause();
                 winner_sound.currentTime = 0;
+                clearInterval(idInterval);
             }, 1000); 
         }
     }, 1000);
