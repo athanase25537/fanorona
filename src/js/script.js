@@ -49,7 +49,7 @@ for(let i = 0; i < all_pos.length; i++){
             setTimeout(() => {
                 winner_sound.pause();
                 winner_sound.currentTime = 0;
-            }, 3000);   
+            }, 1000);   
         }else if(is_mate(piece_p2)){
             winner.classList.remove('no-winner');
             winner_player.textContent = "Player 2 Win";
@@ -60,9 +60,9 @@ for(let i = 0; i < all_pos.length; i++){
             setTimeout(() => {
                 winner_sound.pause();
                 winner_sound.currentTime = 0;
-            }, 3000); 
+            }, 1000); 
         }
-    }, 500);
+    }, 1000);
     pos.addEventListener('click', (e) => {
 
         if(!mate){
